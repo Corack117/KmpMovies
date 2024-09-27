@@ -26,8 +26,7 @@ class MainActivity : ComponentActivity() {
                 WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkMode
             }
 
-            val db = getDatabaseBuilder(this)
-            App(moviesDao = db.moviesDao())
+            App()
         }
     }
 }

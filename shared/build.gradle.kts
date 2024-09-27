@@ -50,6 +50,10 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.koin.core)
+                implementation(libs.koin.compose)
+                implementation(libs.koin.compose.viewmodel)
+                implementation(project.dependencies.platform(libs.koin.bom))
             }
         }
 
@@ -65,6 +69,7 @@ kotlin {
         val androidMain by getting {
             dependsOn(nativeMain) // Android depende de nativeMain
             dependencies {
+                implementation(libs.koin.android)
             }
         }
 
@@ -107,5 +112,13 @@ room {
 }
 
 dependencies {
-    ksp(libs.androidx.room.compiler)
+    listOf(
+        "kspAndroid",
+        "kspDesktop",
+        "kspIosSimulatorArm64",
+        "kspIosX64",
+        "kspIosArm64"
+    ).forEach {
+        add(it, libs.androidx.room.compiler)
+    }
 }

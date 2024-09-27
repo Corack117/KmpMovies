@@ -6,11 +6,12 @@ import com.corack.kmpmovies.App
 import com.corack.shared.database.getDatabaseBuilder
 
 fun main() = application {
+    initKoin {  }
     Window(
         onCloseRequest = ::exitApplication,
         title = "KmpMovies",
     ) {
         val db = getDatabaseBuilder()
-        App(moviesDao = db.moviesDao())
+        App()
     }
 }

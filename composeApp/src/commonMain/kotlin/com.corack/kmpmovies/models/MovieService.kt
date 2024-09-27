@@ -14,24 +14,33 @@ class MovieService(
 ) {
     val movies: Flow<List<Movie>> = moviesDao.fetchPopularMovies().onEach { movies ->
         if (movies.isEmpty()) {
-            val popularMovies = fetchPopularMovies().results.map { it.toMovie() }
-            moviesDao.save(popularMovies)
+            val popularMovies = fetchPopularMovies()
+            val moviesFetched = popularMovies?.let { remoteResult ->
+                remoteResult.results.map { it.toMovie() }
+            }
+            moviesDao.save(moviesFetched ?: emptyList())
         }
     }
 
-    suspend private fun fetchPopularMovies(): RemoteResult {
-        return client
-            .get("/3/discover/movie?sort_by=popularity.desc")
-            .body<RemoteResult>()
+    suspend private fun fetchPopularMovies(): RemoteResult? {
+        return try {
+            client
+                .get("/3/discover/movie?sort_by=popularity.desc")
+                .body<RemoteResult>()
+        } catch (e: Exception) { null }
     }
 
     suspend fun fetchMovieById(id: Int): Flow<Movie?> = moviesDao.fetchMovieById(id).onEach { movie ->
         movie.let {
-            val result = client
-                .get("/3/movie/$id")
-                .body<RemoteMovie>()
-            val remoteMovie = result.toMovie()
-            moviesDao.save(listOf(remoteMovie))
+            try {
+                val result = client
+                    .get("/3/movie/$id")
+                    .body<RemoteMovie>()
+                val remoteMovie = result.toMovie()
+                moviesDao.save(listOf(remoteMovie))
+            } catch (e: Exception) {
+                moviesDao.save(listOf())
+            }
         }
     }
 }

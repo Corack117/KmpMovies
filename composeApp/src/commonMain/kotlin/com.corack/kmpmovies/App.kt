@@ -16,13 +16,12 @@ import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import coil3.util.DebugLogger
-import com.corack.shared.database.MoviesDao
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 @Preview
-fun App(moviesDao: MoviesDao) {
+fun App() {
     setSingletonImageLoaderFactory { context ->
         ImageLoader.Builder(context)
             .crossfade(true)
@@ -34,7 +33,7 @@ fun App(moviesDao: MoviesDao) {
 
     MaterialTheme(colorScheme) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            Navigation(moviesDao)
+            Navigation()
         }
     }
 }
