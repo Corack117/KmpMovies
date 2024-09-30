@@ -10,7 +10,8 @@ expect class Movie(
     originalTitle: String,
     originalLanguage: String,
     popularity: Double,
-    voteAverage: Double
+    voteAverage: Double,
+    isFavorite: Boolean
 ) {
     val id: Int
     val title: String
@@ -22,4 +23,19 @@ expect class Movie(
     val originalLanguage: String
     val popularity: Double
     val voteAverage: Double
+    var isFavorite: Boolean
+
+    fun update(
+        id: Int = this.id,
+        title: String = this.title,
+        overview: String = this.overview,
+        releaseDate: String = this.releaseDate,
+        poster: String = this.poster,
+        backdrop: String? = this.backdrop,
+        originalTitle: String = this.originalTitle,
+        originalLanguage: String = this.originalLanguage,
+        popularity: Double = this.popularity,
+        voteAverage: Double = this.voteAverage,
+        isFavorite: Boolean = this.isFavorite
+    ): Movie
 }

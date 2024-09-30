@@ -36,7 +36,8 @@ data class RemoteMovie(
             originalTitle = originalTitle,
             originalLanguage = originalLanguage,
             popularity = popularity,
-            voteAverage = voteAverage
+            voteAverage = voteAverage,
+            isFavorite = false
         )
     }
 }

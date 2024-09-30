@@ -43,4 +43,10 @@ class MovieService(
             }
         }
     }
+
+    suspend fun toggleFavorite(movie: Movie) {
+        moviesDao.save(
+            listOf(movie.update(isFavorite = !movie.isFavorite))
+        )
+    }
 }
