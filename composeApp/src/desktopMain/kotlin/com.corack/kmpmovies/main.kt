@@ -11,7 +11,6 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "KmpMovies",
     ) {
-        val db = getDatabaseBuilder()
         App()
     }
 }

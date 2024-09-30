@@ -31,7 +31,7 @@ class MovieService(
     }
 
     suspend fun fetchMovieById(id: Int): Flow<Movie?> = moviesDao.fetchMovieById(id).onEach { movie ->
-        movie.let {
+        if (movie == null) {
             try {
                 val result = client
                     .get("/3/movie/$id")

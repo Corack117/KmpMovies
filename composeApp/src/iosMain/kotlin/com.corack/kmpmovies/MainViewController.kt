@@ -7,6 +7,5 @@ import com.corack.shared.database.getDatabaseBuilder
 fun MainViewController() = ComposeUIViewController(
     configure = { initKoin() }
 ) {
-    val db = getDatabaseBuilder().build()
-    App(moviesDao =  db.moviesDao())
+    App()
 }

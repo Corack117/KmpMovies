@@ -173,6 +173,8 @@ compose.desktop {
     }
 }
 
+tasks.register("testClasses")
+
 room {
     schemaDirectory("$projectDir/schemas")
 }

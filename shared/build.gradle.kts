@@ -107,6 +107,8 @@ android {
     }
 }
 
+tasks.register("testClasses")
+
 room {
     schemaDirectory("$projectDir/schemas")
 }
