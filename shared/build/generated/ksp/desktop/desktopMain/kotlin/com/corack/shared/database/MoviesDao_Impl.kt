@@ -8,6 +8,7 @@ import androidx.room.util.performSuspending
 import androidx.sqlite.SQLiteStatement
 import com.corack.shared.models.Movie
 import javax.`annotation`.processing.Generated
+import kotlin.Boolean
 import kotlin.Double
 import kotlin.Int
 import kotlin.String
@@ -31,7 +32,7 @@ public class MoviesDao_Impl(
     this.__db = __db
     this.__insertAdapterOfMovie = object : EntityInsertAdapter<Movie>() {
       protected override fun createQuery(): String =
-          "INSERT OR REPLACE INTO `Movie` (`id`,`title`,`overview`,`releaseDate`,`poster`,`backdrop`,`originalTitle`,`originalLanguage`,`popularity`,`voteAverage`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?)"
+          "INSERT OR REPLACE INTO `Movie` (`id`,`title`,`overview`,`releaseDate`,`poster`,`backdrop`,`originalTitle`,`originalLanguage`,`popularity`,`voteAverage`,`isFavorite`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?)"
 
       protected override fun bind(statement: SQLiteStatement, entity: Movie) {
         statement.bindLong(1, entity.id.toLong())
@@ -49,6 +50,8 @@ public class MoviesDao_Impl(
         statement.bindText(8, entity.originalLanguage)
         statement.bindDouble(9, entity.popularity)
         statement.bindDouble(10, entity.voteAverage)
+        val _tmp: Int = if (entity.isFavorite) 1 else 0
+        statement.bindLong(11, _tmp.toLong())
       }
     }
   }
@@ -73,6 +76,7 @@ public class MoviesDao_Impl(
         val _cursorIndexOfOriginalLanguage: Int = getColumnIndexOrThrow(_stmt, "originalLanguage")
         val _cursorIndexOfPopularity: Int = getColumnIndexOrThrow(_stmt, "popularity")
         val _cursorIndexOfVoteAverage: Int = getColumnIndexOrThrow(_stmt, "voteAverage")
+        val _cursorIndexOfIsFavorite: Int = getColumnIndexOrThrow(_stmt, "isFavorite")
         val _result: MutableList<Movie> = mutableListOf()
         while (_stmt.step()) {
           val _item: Movie
@@ -100,8 +104,12 @@ public class MoviesDao_Impl(
           _tmpPopularity = _stmt.getDouble(_cursorIndexOfPopularity)
           val _tmpVoteAverage: Double
           _tmpVoteAverage = _stmt.getDouble(_cursorIndexOfVoteAverage)
+          val _tmpIsFavorite: Boolean
+          val _tmp: Int
+          _tmp = _stmt.getLong(_cursorIndexOfIsFavorite).toInt()
+          _tmpIsFavorite = _tmp != 0
           _item =
-              Movie(_tmpId,_tmpTitle,_tmpOverview,_tmpReleaseDate,_tmpPoster,_tmpBackdrop,_tmpOriginalTitle,_tmpOriginalLanguage,_tmpPopularity,_tmpVoteAverage)
+              Movie(_tmpId,_tmpTitle,_tmpOverview,_tmpReleaseDate,_tmpPoster,_tmpBackdrop,_tmpOriginalTitle,_tmpOriginalLanguage,_tmpPopularity,_tmpVoteAverage,_tmpIsFavorite)
           _result.add(_item)
         }
         _result
@@ -128,6 +136,7 @@ public class MoviesDao_Impl(
         val _cursorIndexOfOriginalLanguage: Int = getColumnIndexOrThrow(_stmt, "originalLanguage")
         val _cursorIndexOfPopularity: Int = getColumnIndexOrThrow(_stmt, "popularity")
         val _cursorIndexOfVoteAverage: Int = getColumnIndexOrThrow(_stmt, "voteAverage")
+        val _cursorIndexOfIsFavorite: Int = getColumnIndexOrThrow(_stmt, "isFavorite")
         val _result: Movie?
         if (_stmt.step()) {
           val _tmpId: Int
@@ -154,8 +163,12 @@ public class MoviesDao_Impl(
           _tmpPopularity = _stmt.getDouble(_cursorIndexOfPopularity)
           val _tmpVoteAverage: Double
           _tmpVoteAverage = _stmt.getDouble(_cursorIndexOfVoteAverage)
+          val _tmpIsFavorite: Boolean
+          val _tmp: Int
+          _tmp = _stmt.getLong(_cursorIndexOfIsFavorite).toInt()
+          _tmpIsFavorite = _tmp != 0
           _result =
-              Movie(_tmpId,_tmpTitle,_tmpOverview,_tmpReleaseDate,_tmpPoster,_tmpBackdrop,_tmpOriginalTitle,_tmpOriginalLanguage,_tmpPopularity,_tmpVoteAverage)
+              Movie(_tmpId,_tmpTitle,_tmpOverview,_tmpReleaseDate,_tmpPoster,_tmpBackdrop,_tmpOriginalTitle,_tmpOriginalLanguage,_tmpPopularity,_tmpVoteAverage,_tmpIsFavorite)
         } else {
           _result = null
         }

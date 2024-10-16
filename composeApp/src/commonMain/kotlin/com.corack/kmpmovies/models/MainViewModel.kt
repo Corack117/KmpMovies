@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.corack.kmpmovies.services.MovieService
 import com.corack.shared.models.Movie
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -15,7 +15,7 @@ class MainViewModel(
     var state by mutableStateOf(UiState())
         private set
 
-    init {
+    fun onUiReady() {
         viewModelScope.launch {
             state = UiState(loading = true)
             moviesService.movies.collect {

@@ -19,6 +19,8 @@ import androidx.navigation.NavController
 import com.corack.kmpmovies.components.LoadingIndicator
 import com.corack.kmpmovies.components.MovieItem
 import com.corack.kmpmovies.models.MainViewModel
+import com.corack.kmpmovies.permissions.PermissionRequestEffect
+import dev.icerock.moko.permissions.Permission
 import kmpmovies.composeapp.generated.resources.Res
 import kmpmovies.composeapp.generated.resources.app_name
 import org.jetbrains.compose.resources.stringResource
@@ -34,6 +36,10 @@ fun MainView(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val state = vm.state
+
+    PermissionRequestEffect(Permission.COARSE_LOCATION) {
+        vm.onUiReady()
+    }
 
     Scaffold(
         topBar = {

@@ -76,6 +76,7 @@ kotlin {
                 implementation(libs.koin.compose)
                 implementation(libs.koin.compose.viewmodel)
                 implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.permissions.compose)
             }
         }
 
@@ -180,6 +181,7 @@ room {
 }
 
 dependencies {
+    implementation(libs.play.services.location)
     ksp(libs.androidx.room.compiler)
 }
 

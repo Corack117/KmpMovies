@@ -34,11 +34,11 @@ public class MoviesDatabase_Impl : MoviesDatabase() {
 
   protected override fun createOpenDelegate(): RoomOpenDelegate {
     val _openDelegate: RoomOpenDelegate = object : RoomOpenDelegate(1,
-        "c189a27957d05862fae5f30752fa7581", "d8db1f60ed81c750ce8c530f1cca3d6d") {
+        "caca85dc4dd8f1bf51030029c5ab6df2", "682a5aaf58882a80cff80c7d506e8597") {
       public override fun createAllTables(connection: SQLiteConnection) {
-        connection.execSQL("CREATE TABLE IF NOT EXISTS `Movie` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `overview` TEXT NOT NULL, `releaseDate` TEXT NOT NULL, `poster` TEXT NOT NULL, `backdrop` TEXT, `originalTitle` TEXT NOT NULL, `originalLanguage` TEXT NOT NULL, `popularity` REAL NOT NULL, `voteAverage` REAL NOT NULL)")
+        connection.execSQL("CREATE TABLE IF NOT EXISTS `Movie` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `overview` TEXT NOT NULL, `releaseDate` TEXT NOT NULL, `poster` TEXT NOT NULL, `backdrop` TEXT, `originalTitle` TEXT NOT NULL, `originalLanguage` TEXT NOT NULL, `popularity` REAL NOT NULL, `voteAverage` REAL NOT NULL, `isFavorite` INTEGER NOT NULL)")
         connection.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)")
-        connection.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c189a27957d05862fae5f30752fa7581')")
+        connection.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'caca85dc4dd8f1bf51030029c5ab6df2')")
       }
 
       public override fun dropAllTables(connection: SQLiteConnection) {
@@ -81,6 +81,8 @@ public class MoviesDatabase_Impl : MoviesDatabase() {
         _columnsMovie.put("popularity", TableInfo.Column("popularity", "REAL", true, 0, null,
             TableInfo.CREATED_FROM_ENTITY))
         _columnsMovie.put("voteAverage", TableInfo.Column("voteAverage", "REAL", true, 0, null,
+            TableInfo.CREATED_FROM_ENTITY))
+        _columnsMovie.put("isFavorite", TableInfo.Column("isFavorite", "INTEGER", true, 0, null,
             TableInfo.CREATED_FROM_ENTITY))
         val _foreignKeysMovie: MutableSet<TableInfo.ForeignKey> = mutableSetOf()
         val _indicesMovie: MutableSet<TableInfo.Index> = mutableSetOf()

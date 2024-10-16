@@ -2,7 +2,8 @@ package com.corack.kmpmovies
 
 import com.corack.kmpmovies.models.DetailViewModel
 import com.corack.kmpmovies.models.MainViewModel
-import com.corack.kmpmovies.models.MovieService
+import com.corack.kmpmovies.services.MovieService
+import com.corack.kmpmovies.services.RegionRepository
 import com.corack.shared.database.MoviesDao
 import com.corack.shared.database.MoviesDatabase
 import com.corack.shared.nativeModule
@@ -14,7 +15,6 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.KoinAppDeclaration
@@ -32,6 +32,7 @@ val dataMode = module {
     // oldVersion
     // factory { MovieService(get(), get()) }
     factoryOf(::MovieService)
+    factoryOf(::RegionRepository)
     single<HttpClient> {
         HttpClient {
             install(ContentNegotiation) {

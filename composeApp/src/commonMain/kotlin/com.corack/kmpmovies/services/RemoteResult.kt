@@ -1,4 +1,4 @@
-package com.corack.kmpmovies.models
+package com.corack.kmpmovies.services
 
 import com.corack.shared.models.Movie
 import kotlinx.serialization.SerialName

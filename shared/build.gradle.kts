@@ -70,6 +70,7 @@ kotlin {
             dependsOn(nativeMain) // Android depende de nativeMain
             dependencies {
                 implementation(libs.koin.android)
+                implementation(libs.play.services.location)
             }
         }
 

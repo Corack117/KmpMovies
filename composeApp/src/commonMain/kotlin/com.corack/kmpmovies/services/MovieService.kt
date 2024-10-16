@@ -1,20 +1,24 @@
-package com.corack.kmpmovies.models
+package com.corack.kmpmovies.services
 
 import com.corack.shared.database.MoviesDao
 import com.corack.shared.models.Movie
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 
 class MovieService(
     private val moviesDao: MoviesDao,
-    private val client: HttpClient
+    private val client: HttpClient,
+    private val regionRepository: RegionRepository
 ) {
     val movies: Flow<List<Movie>> = moviesDao.fetchPopularMovies().onEach { movies ->
         if (movies.isEmpty()) {
-            val popularMovies = fetchPopularMovies()
+            val popularMovies = fetchPopularMovies(
+                regionRepository.fetchRegion()
+            )
             val moviesFetched = popularMovies?.let { remoteResult ->
                 remoteResult.results.map { it.toMovie() }
             }
@@ -22,10 +26,13 @@ class MovieService(
         }
     }
 
-    suspend private fun fetchPopularMovies(): RemoteResult? {
+    suspend private fun fetchPopularMovies(region: String): RemoteResult? {
         return try {
             client
-                .get("/3/discover/movie?sort_by=popularity.desc")
+                .get("/3/discover/movie") {
+                    parameter("region", region)
+                    parameter("sort_by", "popularity.desc")
+                }
                 .body<RemoteResult>()
         } catch (e: Exception) { null }
     }
